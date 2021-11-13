@@ -1,7 +1,5 @@
 import { Mantenimiento } from './../../model/mantenimiento';
 import { MantenimientoService } from './../../services/mantenimiento.service';
-import { ProductService } from './../../services/product.service';
-import { Product } from './../../model/product';
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 

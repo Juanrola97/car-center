@@ -1,4 +1,3 @@
-import { ProductService } from './services/product.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -64,6 +63,6 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     InputTextareaModule,
   ],
   bootstrap: [AppComponent],
-  providers: [ProductService, MessageService, ConfirmationService]
+  providers: [ MessageService, ConfirmationService]
 })
 export class AppModule { }
