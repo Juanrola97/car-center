@@ -1,0 +1,45 @@
+{
+	"data": [
+		{
+			"idMantenimiento": 1,
+			"idServicio": 1,
+			"idRepuesto": 1,
+			"nombre": "Mantenimiento 1",
+			"nombreServicio": "Cambio de aceite",
+			"nombreRepuesto": "Cables",
+			"valorServicio": 20,
+			"valorRepuesto": 5,
+			"cantidadRepuesto": 2,
+            "descuentoServicio": 5,
+            "descuentoRepuesto": 5
+		},
+        {
+			"idMantenimiento": 2,
+			"idServicio": 2,
+			"idRepuesto": 2,
+			"nombre": "Mantenimiento 2",
+			"nombreServicio": "Cambio liquido frenos",
+			"nombreRepuesto": "Carburador",
+			"valorServicio": 10,
+			"valorRepuesto": 100,
+			"cantidadRepuesto": 1,
+            "descuentoServicio": 10,
+            "descuentoRepuesto": 15
+		},
+        {
+			"idMantenimiento": 3,
+			"idServicio": 3,
+			"idRepuesto": 3,
+			"nombre": "Mantenimiento 3",
+			"nombreServicio": "Revision tecnomecanica",
+			"nombreRepuesto": "Pastillas de frenos",
+			"valorServicio": 50,
+			"valorRepuesto": 2,
+			"cantidadRepuesto": 2,
+            "descuentoServicio": 3,
+            "descuentoRepuesto": 2
+		}
+
+        
+	]
+}

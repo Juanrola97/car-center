@@ -1,6 +1,168 @@
-<h1>Car Center</h1>
-<p-selectButton [options]="cities" optionLabel="name"></p-selectButton>
+<p-toast></p-toast>
+<h1 class="title-card">CAR CENTER</h1>
+<div class="card">
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+      <button
+        pButton
+        pRipple
+        label="Generar Factura"
+        icon="pi pi-file"
+        class="p-button-succes p-mr02"
+        (click)="generarFactura()"
+        [disabled]="!selectedMantenimiento || !selectedMantenimiento.length"
+      ></button>
+    </ng-template>
+  </p-toolbar>
 
+  <p-table
+    #dt
+    [value]="mantenimientos"
+    [rows]="10"
+    [paginator]="true"
+    [globalFilterFields]="[
+      'name',
+      'name-service',
+      'price-service',
+      'nombreRepuesto'
+    ]"
+    [(selection)]="selectedMantenimiento"
+    [rowHover]="true"
+    dataKey="idMantenimiento"
+    currentPageReportTemplate="Monstrando {first} a {last} de {totalRecords} registros"
+    [showCurrentPageReport]="true"
+  >
+    <ng-template pTemplate="caption">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        <h5 class="p-m-0">Administrar Mantenimiento</h5>
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Buscar..."
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="name">
+          Mantenimiento <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="name-service">
+          Nombre Servicio <p-sortIcon field="name-service"></p-sortIcon>
+        </th>
+        <th pSortableColumn="price-service">
+          Precio Servicio <p-sortIcon field="price-service"></p-sortIcon>
+        </th>
+        <th pSortableColumn="descuento-servicio">
+          Descuento Servicio
+          <p-sortIcon field="descuento-servicio"></p-sortIcon>
+        </th>
+        <th pSortableColumn="name-repuesto">
+          Nombre Repuesto <p-sortIcon field="name-repuesto"></p-sortIcon>
+        </th>
+        <th pSortableColumn="price-repuesto">
+          Precio Repuesto <p-sortIcon field="price-repuesto"></p-sortIcon>
+        </th>
+        <th pSortableColumn="cantidad-repuesto">
+          Cantidad Repuesto <p-sortIcon field="cantidad-repuesto"></p-sortIcon>
+        </th>
+        <th pSortableColumn="descuento-repuesto">
+          Descuento Repuesto
+          <p-sortIcon field="descuento-repuesto"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-mantenimiento>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="mantenimiento"></p-tableCheckbox>
+        </td>
+        <td>{{ mantenimiento.nombre }}</td>
+        <td>{{ mantenimiento.nombreServicio }}</td>
+        <td>{{ mantenimiento.valorServicio | currency: "USD" }}</td>
+        <td>{{ mantenimiento.descuentoServicio }}</td>
+        <td>
+          {{ mantenimiento.nombreRepuesto }}
+        </td>
+        <td>
+          {{ mantenimiento.valorRepuesto | currency: "USD" }}
+        </td>
+        <td>
+          {{ mantenimiento.cantidadRepuesto }}
+        </td>
+        <td>
+          {{ mantenimiento.descuentoRepuesto }}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="p-d-flex p-ai-center p-jc-between">
+        Hay en total
+        {{ mantenimientos ? mantenimientos.length : 0 }} mantenimientos.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
 
-<h5>Multiple Selection</h5>
-<p-selectButton [options]="cities" [multiple]="true" optionLabel="name" optionValue="value"></p-selectButton>
+<p-dialog
+  [(visible)]="facturaDialog"
+  [style]="{ width: '450px' }"
+  header="Factura"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <div
+      class="p-field row"
+      *ngFor="let mantenimiento of selectedMantenimiento"
+    >
+      <div>
+        <label>Nombre Mantenimiento: ...... {{ mantenimiento.nombre }}</label>
+      </div>
+      <div>
+        <label
+          >Nombre Servicio: ....... {{ mantenimiento.nombreServicio }}</label
+        >
+      </div>
+      <div>
+        <label
+          >Valor Servicio:: ......
+          {{ mantenimiento.valorServicio | currency }}</label
+        >
+      </div>
+      <div>
+        <label
+          >Descuento Servicio: .......
+          {{ mantenimiento.descuentoServicio }}%</label
+        >
+      </div>
+      <div>
+        <label
+          >Nombre Repuesto:: ...... {{ mantenimiento.nombreRepuesto }}</label
+        >
+      </div>
+
+      <div>
+        <label>Valor Repuesto:: ...... {{ mantenimiento.valorRepuesto | currency }}</label>
+      </div>
+      <div>
+        <label>Descuento Repuesto:: ...... {{ mantenimiento.descuentoRepuesto }}%</label>
+      </div>
+      <div>
+        <label>-----------------------------------------</label>
+      </div>
+    </div>
+    <div>
+        <label>Total pago con descuentos: ...... {{ totalPago | currency }}</label>
+      </div>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog></p-confirmDialog>

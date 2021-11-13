@@ -1,4 +1,9 @@
+import { Mantenimiento } from './../../model/mantenimiento';
+import { MantenimientoService } from './../../services/mantenimiento.service';
+import { ProductService } from './../../services/product.service';
+import { Product } from './../../model/product';
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 interface City {
   name: string;
@@ -8,21 +13,45 @@ interface City {
 @Component({
   selector: 'app-car-center',
   templateUrl: './car-center.component.html',
-  styleUrls: ['./car-center.component.css'],
+  styleUrls: ['./car-center.component.scss'],
 })
 export class CarCenterComponent implements OnInit {
-  cities: City[];
+  facturaDialog: boolean = false;
 
-  selectedCity: City = {} as City;
+  mantenimientos: Mantenimiento[] = [];
 
-  constructor() {
-    this.cities = [
-      { name: 'New York', code: 'NY' },
-      { name: 'Rome', code: 'RM' },
-      { name: 'London', code: 'LDN' },
-      { name: 'Istanbul', code: 'IST' },
-      { name: 'Paris', code: 'PRS' },
-    ];
+  Mantenimiento: Mantenimiento = {} as Mantenimiento;
+
+  selectedMantenimiento: Mantenimiento[] = [];
+  totalPago: number = 0;
+
+  submitted: boolean = false;
+
+  constructor(
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
+    private mantenimientoService: MantenimientoService
+  ) {}
+
+  ngOnInit() {
+    this.mantenimientoService
+      .getMantenimiento()
+      .then((data) => (this.mantenimientos = data));
   }
-  ngOnInit(): void {}
+  generarFactura() {
+    this.facturaDialog = true;
+    this.totalPago = 0;
+    this.selectedMantenimiento.map((mantenimiento) => {
+      this.totalPago += mantenimiento.valorServicio
+        ? mantenimiento.valorServicio -
+          (mantenimiento.descuentoServicio / 100) * mantenimiento.valorServicio
+        : 0;
+      this.totalPago += mantenimiento.valorRepuesto
+        ? mantenimiento.valorRepuesto -
+          (mantenimiento.descuentoRepuesto / 100) * mantenimiento.valorRepuesto
+        : 0;
+    });
+    this.totalPago += (19 / 100) * this.totalPago;
+    //this.selectedProducts = [];
+  }
 }

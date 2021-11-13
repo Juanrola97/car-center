@@ -1,5 +1,5 @@
-export interface Clientes {
-    idCliente?: number;
+export interface Mecanicos {
+    idMecanico?: number;
     numeroDocumento?: number;
     tipoDocumento?: string;
     primerNombre?: string;
@@ -8,4 +8,5 @@ export interface Clientes {
     segundoApellido?: string;
     direccion?: string;
     correoElectronico?: string;
+    estado?: string;
 }
