@@ -47,8 +47,8 @@ export class CarCenterComponent implements OnInit {
           (mantenimiento.descuentoServicio / 100) * mantenimiento.valorServicio
         : 0;
       this.totalPago += mantenimiento.valorRepuesto
-        ? mantenimiento.valorRepuesto -
-          (mantenimiento.descuentoRepuesto / 100) * mantenimiento.valorRepuesto
+        ? (mantenimiento.valorRepuesto -
+          (mantenimiento.descuentoRepuesto / 100) * mantenimiento.valorRepuesto) * (mantenimiento.cantidadRepuesto ? mantenimiento.cantidadRepuesto : 1)
         : 0;
     });
     this.totalPago += (19 / 100) * this.totalPago;
